@@ -57,6 +57,7 @@ class NotificationHelper {
             int channelImportance = channelConfig.hasKey("importance") ?
                     channelConfig.getInt("importance") : NotificationManager.IMPORTANCE_LOW;
             boolean enableVibration = channelConfig.hasKey("enableVibration") && channelConfig.getBoolean("enableVibration");
+            boolean soundOff = channelConfig.hasKey("soundOff") && channelConfig.getBoolean("soundOff");
             if (channelId == null || channelName == null) {
                 promise.reject(ERROR_INVALID_CONFIG, "VIForegroundService: Channel id or name is not specified");
                 return;
@@ -64,6 +65,9 @@ class NotificationHelper {
             NotificationChannel channel = new NotificationChannel(channelId, channelName, channelImportance);
             channel.setDescription(channelDescription);
             channel.enableVibration(enableVibration);
+            if (soundOff) {
+                channel.setSound(null, null);
+            }
             mNotificationManager.createNotificationChannel(channel);
             promise.resolve(null);
         } else {
