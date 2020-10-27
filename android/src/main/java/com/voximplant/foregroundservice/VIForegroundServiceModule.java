@@ -123,6 +123,7 @@ public class VIForegroundServiceModule extends ReactContextBaseJavaModule implem
             Intent intent = new Intent(getReactApplicationContext(), VIForegroundService.class);
             intent.setAction(Constants.ACTION_FOREGROUND_SERVICE_STOP);
             getReactApplicationContext().stopService(intent);
+            android.os.Process.killProcess(android.os.Process.myPid());
         }
 
     }
